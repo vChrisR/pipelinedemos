@@ -1,0 +1,37 @@
+resources:
+- name: git-pipline-demos
+  type: git
+  source:
+    uri: https://github.com/vChrisR/pipelinedemos.git
+- name: stemcell
+  type: bosh-io-stemcell
+  source:
+    name: bosh-vsphere-esxi-ubuntu-trusty-go_agent
+    version: latest
+- name: redis
+  type: bosh-io-release
+  source:
+    repository: cloudfoundry-community/redis-boshrelease
+    version: latest
+- name: redis-test-deployment
+  type: bosh-deployment
+  source:
+    target: https://192.168.192.80:25555
+    username: admin
+    password: password
+    deployment: staging-redis
+jobs:
+- name: stage-redis-job
+  plan:
+  - aggregate:
+    - get: git-pipline-demos
+      trigger: true
+    - get: stemcell
+      trigger: true
+    - get: redis
+      trigger: true
+  - put: redis-test-deployment
+    params:
+      manifest: pipelinedemos/redis.yml
+      stemcells: [stemcell/*.tgz]
+      releases: [release-*/*.tgz]

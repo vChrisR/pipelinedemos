@@ -1,0 +1,29 @@
+name: redis-test-deployment
+director_uuid: 17b06028-14f8-4d5f-84b7-ffb96c17bb0a
+releases:
+- name: redis
+  version: latest
+instance_groups:
+- name: redis-master
+  instances: 1
+  azs:  [ homelab ]
+  jobs:
+  - name: redis
+    release: redis
+    properties:
+      redis:
+        password: password
+  vm_type: default
+  stemcell: default
+  persistent_disk_type: medium
+  networks:
+  - name: default
+update:
+  canaries: 1
+  canary_watch_time: 1000-100000
+  max_in_flight: 50
+  update_watch_time: 1000-100000
+stemcells:
+- alias: default
+  os: ubuntu-trusty
+  version: latest
