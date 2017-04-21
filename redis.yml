@@ -1,5 +1,5 @@
 name: redis-test-deployment
-director_uuid: 17b06028-14f8-4d5f-84b7-ffb96c17bb0a
+director_uuid: c5ad7904-d64b-40cc-bf2c-d6c6b3d7d913
 releases:
 - name: redis
   version: latest

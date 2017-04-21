@@ -1,5 +1,5 @@
 resources:
-- name: git-pipline-demos
+- name: pipelinedemos
   type: git
   source:
     uri: https://github.com/vChrisR/pipelinedemos.git
@@ -24,7 +24,7 @@ jobs:
 - name: stage-redis-job
   plan:
   - aggregate:
-    - get: git-pipline-demos
+    - get: pipelinedemos
       trigger: true
     - get: stemcell
       trigger: true
@@ -32,6 +32,6 @@ jobs:
       trigger: true
   - put: redis-test-deployment
     params:
-      manifest: redis.yml
+      manifest: pipelinedemos/redis.yml
       stemcells: [stemcell/*.tgz]
-      releases: [release-*/*.tgz]
+      releases: [redis/*.tgz]
