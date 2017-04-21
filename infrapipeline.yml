@@ -19,7 +19,7 @@ resources:
     target: https://192.168.192.80:25555
     username: admin
     password: password
-    deployment: staging-redis
+    deployment: redis-test-deployment
 jobs:
 - name: stage-redis-job
   plan:
@@ -32,6 +32,6 @@ jobs:
       trigger: true
   - put: redis-test-deployment
     params:
-      manifest: pipelinedemos/redis.yml
+      manifest: redis.yml
       stemcells: [stemcell/*.tgz]
       releases: [release-*/*.tgz]
