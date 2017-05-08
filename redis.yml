@@ -11,13 +11,17 @@ instance_groups:
   - name: redis
     release: redis
     properties:
-      redis:
-        password: password
+       password: ((redis-password))
   vm_type: default
   stemcell: default
   persistent_disk_type: medium
   networks:
   - name: default
+  
+variables:
+- name: redis-password
+  type: password
+  
 update:
   canaries: 1
   canary_watch_time: 1000-100000
